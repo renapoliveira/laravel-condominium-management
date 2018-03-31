@@ -23,6 +23,12 @@ Route::get('dashboard', function () {
 Route::get('perfis', function () {
 	return view('dashboard.profiles');
 });
+Route::get('perfis', 'ProfilesController@index');
+
+// Route::get('perfis', 'ProfilesController@index')->name('signup')->middleware('checkguest');
+Route::get('perfis/novo', function () {
+	return view('dashboard.profiles');
+});
 
 Route::get('example', function () {
 	return view('example');
