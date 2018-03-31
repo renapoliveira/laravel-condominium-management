@@ -11,10 +11,19 @@
 |
 */
 
+
 Route::get('/', function () {
-    return view('example');
+	return view('dashboard.index');
 });
 
 Route::get('dashboard', function () {
-    return view('dashboard.index');
+	return view('dashboard.index');
+});
+
+Route::get('perfis', function () {
+	return view('dashboard.profiles');
+});
+
+Route::get('example', function () {
+	return view('example');
 });
