@@ -39,7 +39,7 @@
 
         <div class="form-group">
           <label class="checkbox-inline">
-            <input type="checkbox" onClick="toggle(this)" /> Selecionar todos<br/>
+            <input id="input_toggle" type="checkbox" onClick="toggle(this)" /> Selecionar todos<br/>
           </label>
         </div>
 
@@ -71,6 +71,24 @@
       checkboxes[i].checked = source.checked;
     }
   }
+
+  document.addEventListener('DOMContentLoaded', function() {
+
+    function checkAllToggled () {
+      var allToggled = true;
+      checkboxes = document.getElementsByName('privileges[]');
+      
+      for(var i=0, n=checkboxes.length;i<n;i++) {
+        if(checkboxes[i].checked != true){
+          allToggled = false;
+        }
+      }
+      if(allToggled) {
+        document.getElementById("input_toggle").checked = "checked";
+      }      
+    }
+    checkAllToggled();
+  }, false);
 
 </script>
 
