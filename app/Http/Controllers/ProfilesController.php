@@ -39,8 +39,10 @@ class ProfilesController extends Controller
 		$profileId = DB::table('profiles')->insertGetId(['name'=> $request->name, 'created_at' => date('Y-m-d H:i:s')]);
 
 		if ($profileId) {
-			foreach ($request->privileges as $p) {
-				DB::table('profiles_privileges')->insert(['profile' => $profileId, 'privilege' => $p, 'created_at' => date('Y-m-d H:i:s')]);
+			if (! empty($request->privileges)) {
+				foreach ($request->privileges as $p) {
+					DB::table('profiles_privileges')->insert(['profile' => $profileId, 'privilege' => $p, 'created_at' => date('Y-m-d H:i:s')]);
+				}
 			}
 		}
 
@@ -90,10 +92,11 @@ class ProfilesController extends Controller
 
 		DB::table('profiles_privileges')->where(['profile' => $request->id])->delete();
 		
-		foreach ($request->privileges as $p) {
-			DB::table('profiles_privileges')->insert(['profile' => $request->id,  'privilege' => $p, 'created_at' => date('Y-m-d H:i:s')]);
+		if (! empty($request->privileges)) {
+			foreach ($request->privileges as $p) {
+				DB::table('profiles_privileges')->insert(['profile' => $request->id,  'privilege' => $p, 'created_at' => date('Y-m-d H:i:s')]);
+			}
 		}
-		
 
 		session()->flash('success', 'Perfil atualizado com sucesso.');
 		return redirect('perfis');
