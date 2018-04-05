@@ -13,19 +13,19 @@
     <title>Painel Administrativo</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="../admin/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ URL::asset('admin/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
 
     <!-- MetisMenu CSS -->
-    <link href="../admin/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+    <link href="{{ URL::asset('admin/vendor/metisMenu/metisMenu.min.css') }}" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="../admin/dist/css/sb-admin-2.css" rel="stylesheet">
+    <link href="{{ URL::asset('admin/dist/css/sb-admin-2.css') }}" rel="stylesheet">
 
     <!-- Morris Charts CSS -->
-    <!-- <link href="../admin/vendor/morrisjs/morris.css" rel="stylesheet"> -->
+    <!-- <link href="{{ URL::asset('admin/vendor/morrisjs/morris.css') }}" rel="stylesheet"> -->
 
     <!-- Custom Fonts -->
-    <link href="../admin/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="{{ URL::asset('admin/vendor/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -43,6 +43,7 @@
         @include('dashboard.nav')
 
         <div id="page-wrapper">
+            <br/>
             @yield('content')
         </div>
         <!-- /#page-wrapper -->
@@ -51,21 +52,21 @@
     <!-- /#wrapper -->
 
     <!-- jQuery -->
-    <script src="../admin/vendor/jquery/jquery.min.js"></script>
+    <script src="{{ URL::asset('admin/vendor/jquery/jquery.min.js') }}"></script>
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="../admin/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="{{ URL::asset('admin/vendor/bootstrap/js/bootstrap.min.js') }}"></script>
 
     <!-- Metis Menu Plugin JavaScript -->
-    <script src="../admin/vendor/metisMenu/metisMenu.min.js"></script>
+    <script src="{{ URL::asset('admin/vendor/metisMenu/metisMenu.min.js') }}"></script>
 
     <!-- Morris Charts JavaScript -->
-    <!-- <script src="../admin/vendor/raphael/raphael.min.js"></script>
-    <script src="../admin/vendor/morrisjs/morris.min.js"></script>
-    <script src="../admin/data/morris-data.js"></script> -->
+    <!-- <script src="{{ URL::asset('admin/vendor/raphael/raphael.min.js') }}"></script>
+    <script src="{{ URL::asset('admin/vendor/morrisjs/morris.min.js') }}"></script>
+    <script src="{{ URL::asset('admin/data/morris-data.js') }}"></script> -->
 
     <!-- Custom Theme JavaScript -->
-    <script src="../admin/dist/js/sb-admin-2.js"></script>
+    <script src="{{ URL::asset('admin/dist/js/sb-admin-2.js') }}"></script>
 
 </body>
 
