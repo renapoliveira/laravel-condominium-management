@@ -8,7 +8,7 @@
 </li>
 </ol>
 
-<div class="container">
+<div class="container-fluid">
     @if (session()->get('success'))
     <div class="alert alert-success">
       <ul>

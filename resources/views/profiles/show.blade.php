@@ -10,7 +10,14 @@
   <li class="breadcrumb-item active">Visualizar</li>
 </ol>
 
-<div class="container">
+<div class="container-fluid">
+
+  <div class="row">
+    <div class="col-lg-12">
+      <a href="{{ URL::previous() }}" class="btn btn-default"><i class="fa fa-arrow-left fa-fw"></i> Voltar</a>
+    </div>
+  </div>
+  
 
   <div class="row" style="margin-top: 10px;">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
