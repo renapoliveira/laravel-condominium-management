@@ -7,13 +7,14 @@ use Illuminate\Validation\Rule; //Used for creating local rules (Checking blocke
 use Validator;
 use DB;
 use App\Rules\UserPassword;
+use App\Services\SessionService;
 
 
 class LoginController extends Controller
 {
 	public function __construct()
 	{
-
+		$this->sessionService = new SessionService;
 	}
 
 	public function index() 
@@ -53,7 +54,13 @@ class LoginController extends Controller
 			'email.exists' => 'Você não está autorizado a entrar no sistema, fale com o administrador.',
 		])->validate();                
 
-
+		$this->sessionService->login($user);
 		return redirect('dashboard');
+	}
+
+	public function logout()
+	{
+		$this->sessionService->logout();
+		return redirect('login');
 	}
 }
