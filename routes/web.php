@@ -29,6 +29,7 @@ Route::post('perfis/{id}/editar', 'ProfilesController@update')->middleware('chec
 Route::get('perfis/{id}/remover', 'ProfilesController@destroy')->middleware('checkuser');
 
 Route::get('usuarios', 'UsersController@index')->name('usuarios')->middleware('checkuser');
+Route::get('usuarios/novo', 'UsersController@create')->middleware('checkuser');
 
 
 Route::get('login', 'LoginController@index')->middleware('checkguest');
