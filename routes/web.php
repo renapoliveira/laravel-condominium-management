@@ -20,9 +20,6 @@ Route::get('dashboard', function () {
 	return view('dashboard.index');
 })->middleware('checkuser');
 
-Route::get('perfis', function () {
-	return view('dashboard.profiles');
-})->middleware('checkuser');
 Route::get('perfis', 'ProfilesController@index')->name('perfis')->middleware('checkuser');
 Route::get('perfis/novo', 'ProfilesController@create')->middleware('checkuser');
 Route::post('perfis/novo', 'ProfilesController@store')->middleware('checkuser');
@@ -30,6 +27,8 @@ Route::get('perfis/{id}/visualizar', 'ProfilesController@show')->middleware('che
 Route::get('perfis/{id}/editar', 'ProfilesController@edit')->middleware('checkuser');
 Route::post('perfis/{id}/editar', 'ProfilesController@update')->middleware('checkuser');
 Route::get('perfis/{id}/remover', 'ProfilesController@destroy')->middleware('checkuser');
+
+Route::get('usuarios', 'UsersController@index')->name('usuarios')->middleware('checkuser');
 
 
 Route::get('login', 'LoginController@index')->middleware('checkguest');

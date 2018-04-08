@@ -165,6 +165,7 @@
                     <ul class="nav nav-second-level">                                
                         <li>
                             <a href="{{ url('perfis') }}"><i class="fa fa-users fa-fw"></i> Cadastro de Perfis</a>
+                            <a href="{{ url('usuarios') }}"><i class="fa fa-user fa-fw"></i> Cadastro de Usuários</a>
                         </li>                                
                     </ul>
                     <!-- /.nav-second-level -->

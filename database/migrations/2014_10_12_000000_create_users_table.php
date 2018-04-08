@@ -19,6 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->integer('profile')->nullable();
             $table->boolean('blocked')->default(0);
+            $table->boolean('soft_delete')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });
