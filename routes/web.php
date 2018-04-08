@@ -34,6 +34,10 @@ Route::get('perfis/{id}/editar', 'ProfilesController@edit');
 Route::post('perfis/{id}/editar', 'ProfilesController@update');
 Route::get('perfis/{id}/remover', 'ProfilesController@destroy');
 
+
+Route::get('login', 'LoginController@index');
+Route::post('login', 'LoginController@login');
+
 Route::get('example', function () {
 	return view('example');
 });
