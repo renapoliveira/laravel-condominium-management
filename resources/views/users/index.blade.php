@@ -36,7 +36,7 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>E-mail</th>
+                                <th>Login</th>
                                 <th>Perfil</th>
                                 <th>Status</th>
                                 <th>Última atualização</th>
@@ -47,7 +47,7 @@
                             @foreach ($data as $d)
                             <tr>
                                 <td>{{$d->id}}</td>
-                                <td>{{$d->email}}</td>
+                                <td>{{$d->login}}</td>
                                 <td>{{$d->profile_name}}</td>
                                 @if ($d->blocked == 0)
                                     <td>Ativo</td>

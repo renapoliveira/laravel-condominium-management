@@ -35,13 +35,13 @@
         {{ csrf_field() }}
 
         <fieldset class="form-group">
-          <label>E-mail</label>
-          <input name="email" class="form-control" placeholder="E-mail" value="{{ old('email') }}" required>
+          <label>Login</label>
+          <input name="login" class="form-control" placeholder="Login" value="{{ old('login') }}" required>
         </fieldset>
 
         <fieldset class="form-group">
           <label>Senha</label>
-          <input type="password" name="password" class="form-control" placeholder="Senha" value="{{ old('email') }}" required>
+          <input type="password" name="password" class="form-control" placeholder="Senha" value="{{ old('password') }}" required>
         </fieldset>
 
         <div class="form-group">

@@ -26,32 +26,31 @@ class LoginController extends Controller
 	{
 		$validator = Validator::make($request->all(), [
 			'password' => 'required',			
-			'email' => [
-				'required',
-				'email', 
-				//exists:users will automatically look for the input inside the table users and column email
+			'login' => [
+				'required',				
+				//exists:users will automatically look for the input inside the table users and column login
 				'exists:users' ,
 			],
 		],[
-			'email.required' => 'Insira um e-mail válido.',
-			'email.exists' => 'Usuário ou senha não conferem.',
+			'login.required' => 'Campo login é obrigatório.',
+			'login.exists' => 'Usuário ou senha não conferem.',
 		])->validate();		
 
 		
 		// Not using User Model here because the password is configured as hidden inside the model and I need to validate it.
-		$user = DB::table('users')->where(['email' => request('email')])->get()->first();
+		$user = DB::table('users')->where(['login' => request('login')])->get()->first();
 		$request['passwords'] = array('db' => $user->password, 'request' => request('password'));		
 		$validator = Validator::make($request->all(), ['passwords' => [new UserPassword],])->validate();
 
 		// Validate Blocked Users
 		$validator = Validator::make($request->all(), [
-			'email' => [
+			'login' => [
 				Rule::exists('users')->where(function ($query) {
 					$query->where('blocked', '0');
 				}),
 			],
 		],[
-			'email.exists' => 'Você não está autorizado a entrar no sistema, fale com o administrador.',
+			'login.exists' => 'Você não está autorizado a entrar no sistema, fale com o administrador.',
 		])->validate();                
 
 		$this->sessionService->login($user);
