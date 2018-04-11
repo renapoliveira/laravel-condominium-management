@@ -47,18 +47,18 @@
           <label class="checkbox-inline">
             <input id="input_toggle" type="checkbox" onClick="toggle(this)" /> Selecionar todos<br/>
           </label>
-        </div>
+        </div>        
 
-        @foreach ($privileges as $p)
-        <div class="form-group">
-          <label>{{$p->label}}</label>            
-          @foreach ($p->actions as $a)
-          <label class="checkbox-inline">
-            <input type="checkbox" name="privileges[]" value="{{$a->id}}" <?php echo (in_array($a->id, $profilesPrivileges)) ? 'checked="checked"' : ''; ?>>{{$a->label}}
-          </label>
-          @endforeach            
-        </div>
-        @endforeach
+        <table class="table table-striped">
+          @foreach ($privileges as $p)
+          <tr>
+            <td>{{$p->label}}</td>
+            @foreach ($p->actions as $a)
+            <td><input type="checkbox" name="privileges[]" value="{{$a->id}}" <?php echo (in_array($a->id, $profilesPrivileges)) ? 'checked="checked"' : ''; ?> id="{{$a->id}}"> <label for="{{$a->id}}">{{$a->label}}</label></td>
+            @endforeach
+          </tr>
+          @endforeach
+        </table>
 
         <div class="text-center">
           <button type="submit" class="btn btn-success">Salvar</button>

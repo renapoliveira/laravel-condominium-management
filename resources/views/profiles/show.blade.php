@@ -32,16 +32,16 @@
           <label>Privilégios</label>
         </fieldset>        
 
-        @foreach ($privileges as $p)
-        <div class="form-group">
-          <label>{{$p->label}}</label>            
-          @foreach ($p->actions as $a)
-          <label class="checkbox-inline">
-            <input type="checkbox" name="privileges[]" value="{{$a->id}}" <?php echo (in_array($a->id, $profilesPrivileges)) ? 'checked="checked"' : ''; ?>" disabled="disabled">{{$a->label}}
-          </label>
-          @endforeach            
-        </div>
-        @endforeach        
+        <table class="table table-striped">
+          @foreach ($privileges as $p)
+          <tr>
+            <td>{{$p->label}}</td>
+            @foreach ($p->actions as $a)
+            <td><input type="checkbox" name="privileges[]" value="{{$a->id}}" <?php echo (in_array($a->id, $profilesPrivileges)) ? 'checked="checked"' : ''; ?>" disabled="disabled"> {{$a->label}}</td>
+            @endforeach
+          </tr>
+          @endforeach
+        </table>
 
       </form>
     </div>
