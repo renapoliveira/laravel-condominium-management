@@ -5,22 +5,20 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB;
 use Validator;
-use App\User;
+use App\User as User;
+use App\Profile as Profile;
 
 class UsersController extends Controller
 {
 	public function __construct()
-	{
-		$this->profiles = DB::table('profiles')->where(['soft_delete' => 0])->orderBy('name', 'ASC')->get();
+	{		
+		$this->profiles = Profile::where(['soft_delete' => 0])->orderBy('name', 'ASC')->get();
 	}
 
 	public function index() 
 	{
-		$data = DB::table('users')
-		->select('users.id as id', 'users.login as login', 'users.profile as profile', 'users.blocked as blocked', 'users.created_at as created_at', 'users.updated_at as updated_at', 'profiles.name as profile_name')
-		->leftJoin('profiles', 'users.profile', '=', 'profiles.id')
-		->where(['users.soft_delete' => 0])->orderBy('users.created_at', 'DESC')->get();
-		
+
+		$data = User::where(['soft_delete' => 0])->orderBy('users.created_at', 'DESC')->get();
 		return view('users.index', ['data' => $data]);
 	}
 
@@ -30,7 +28,7 @@ class UsersController extends Controller
 	}
 
 	public function store(Request $request)
-	{		
+	{
 		$validator = Validator::make($request->all(), [
 			'login' => 'required|unique:users',
 			'password' => 'required|min:6',
@@ -57,5 +55,11 @@ class UsersController extends Controller
 			return redirect('usuarios');
 		}
 
+	}
+
+	public function show($id)
+	{	
+		$user = User::find($id)->first();		
+		return view('users.show', ['user' => $user, 'profiles' => $this->profiles]);
 	}
 }

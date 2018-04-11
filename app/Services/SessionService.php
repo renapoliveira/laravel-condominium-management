@@ -12,7 +12,7 @@ class SessionService extends Controller
     */
     public function login($user)
     {
-        session(['logged' => true, 'user' => ['id' => $user->id, 'login' => $user->login, 'profile' => $user->profile] ]);
+        session(['logged' => true, 'user' => ['id' => $user->id, 'login' => $user->login, 'profile' => $user->profile_id] ]);
     }
 
     /*

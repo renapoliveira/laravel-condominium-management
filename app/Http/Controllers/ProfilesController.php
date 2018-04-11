@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Services\PrivilegeService;
 use DB;
 use Validator;
+use App\Profile as Profile;
+use App\ProfilePrivilege as ProfilePrivilege;
 
 
 class ProfilesController extends Controller
@@ -16,8 +18,8 @@ class ProfilesController extends Controller
 	}
 
 	public function index() 
-	{
-		$data = DB::table('profiles')->where(['soft_delete' => 0])->orderBy('created_at', 'DESC')->get();
+	{		
+		$data = Profile::where(['soft_delete' => 0])->orderBy('created_at', 'DESC')->get();
 		return view('profiles.index', ['data' => $data]);
 	}
 
@@ -36,12 +38,18 @@ class ProfilesController extends Controller
 			'name.min' => 'Insira no mínimo 2 caracteres no campo nome',
 		])->validate();
 		
-		$profileId = DB::table('profiles')->insertGetId(['name'=> $request->name, 'created_at' => date('Y-m-d H:i:s')]);
+		// $profileId = DB::table('profiles')->insertGetId(['name'=> $request->name, 'created_at' => date('Y-m-d H:i:s')]);
+		$profile = Profile::create([
+			'name' => $request->name			
+		]);
 
-		if ($profileId) {
+		if ($profile->id) {
 			if (! empty($request->privileges)) {
 				foreach ($request->privileges as $p) {
-					DB::table('profiles_privileges')->insert(['profile' => $profileId, 'privilege' => $p, 'created_at' => date('Y-m-d H:i:s')]);
+					ProfilePrivilege::create([
+						'profile_id' => $profile->id, 
+						'privilege_id' => $p
+					]);					
 				}
 			}
 		}
@@ -52,31 +60,31 @@ class ProfilesController extends Controller
 	}
 
 	public function show($id)
-	{		
-		$profile = DB::table('profiles')->where(['id' => $id])->get();
+	{	
+		$profile = Profile::find($id)->first();		
+		
 		$privileges = $this->privilegeService->getPrivileges();
-		$profilesPrivileges = DB::table('profiles_privileges')->where(['profile' => $id])->get();		
 
-		$insertedProfilesPrivileges = [];
-		foreach ($profilesPrivileges as $p) {
-			$insertedProfilesPrivileges[] = $p->privilege;
+		$profilesPrivileges = [];
+		foreach ($profile->privileges as $p) {			
+			$profilesPrivileges[] = $p->privilege_id;
 		}		
 		
-		return view('profiles.show', ['profile' => $profile[0], 'privileges' => $privileges, 'profilesPrivileges' => $insertedProfilesPrivileges]);
+		return view('profiles.show', ['profile' => $profile, 'privileges' => $privileges, 'profilesPrivileges' => $profilesPrivileges]);
 	}
 
 	public function edit($id) 
 	{
-		$profile = DB::table('profiles')->where(['id' => $id])->get();
+		$profile = Profile::find($id)->first();		
+		
 		$privileges = $this->privilegeService->getPrivileges();
-		$profilesPrivileges = DB::table('profiles_privileges')->where(['profile' => $id])->get();		
 
-		$insertedProfilesPrivileges = [];
-		foreach ($profilesPrivileges as $p) {
-			$insertedProfilesPrivileges[] = $p->privilege;
+		$profilesPrivileges = [];
+		foreach ($profile->privileges as $p) {			
+			$profilesPrivileges[] = $p->privilege_id;
 		}		
 		
-		return view('profiles.edit', ['profile' => $profile[0], 'privileges' => $privileges, 'profilesPrivileges' => $insertedProfilesPrivileges]);
+		return view('profiles.edit', ['profile' => $profile, 'privileges' => $privileges, 'profilesPrivileges' => $profilesPrivileges]);
 	}
 
 	public function update(Request $request) 
@@ -88,13 +96,15 @@ class ProfilesController extends Controller
 			'name.min' => 'Insira no mínimo 2 caracteres no campo nome',
 		])->validate();
 		
-		DB::table('profiles')->where(['id'=> $request->id])->update(['name' => $request->name, 'updated_at' => date('Y-m-d H:i:s')]);
-
-		DB::table('profiles_privileges')->where(['profile' => $request->id])->delete();
+		Profile::where(['id'=> $request->id])->update(['name' => $request->name]);
+		ProfilePrivilege::where(['profile_id' => $request->id])->delete();		
 		
 		if (! empty($request->privileges)) {
 			foreach ($request->privileges as $p) {
-				DB::table('profiles_privileges')->insert(['profile' => $request->id,  'privilege' => $p, 'created_at' => date('Y-m-d H:i:s')]);
+				ProfilePrivilege::create([
+					'profile_id' => $request->id,  
+					'privilege_id' => $p
+				]);				
 			}
 		}
 
@@ -104,7 +114,7 @@ class ProfilesController extends Controller
 
 	public function destroy($id) 
 	{
-		DB::table('profiles')->where(['id'=> $id])->update(['soft_delete' => 1, 'updated_at' => date('Y-m-d H:i:s')]);
+		Profile::where(['id'=> $id])->update(['soft_delete' => 1, 'updated_at' => date('Y-m-d H:i:s')]);		
 		session()->flash('success', 'Perfil removido com sucesso.');
 		return redirect('perfis');
 	}

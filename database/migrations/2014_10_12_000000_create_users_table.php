@@ -17,7 +17,7 @@ class CreateUsersTable extends Migration
             $table->increments('id');            
             $table->string('login')->unique();
             $table->string('password');
-            $table->integer('profile')->nullable();
+            $table->integer('profile_id')->nullable();
             $table->boolean('blocked')->default(0);
             $table->boolean('soft_delete')->default(0);
             $table->rememberToken();

@@ -15,8 +15,8 @@ class CreateProfilesPrivilegesTable extends Migration
     {
         Schema::create('profiles_privileges', function (Blueprint $table) {
             $table->increments('id');
-            $table->boolean('profile');
-            $table->boolean('privilege');
+            $table->boolean('profile_id');
+            $table->boolean('privilege_id');
             $table->boolean('soft_delete')->default(0);
             $table->timestamps();
         });

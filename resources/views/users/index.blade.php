@@ -48,7 +48,7 @@
                             <tr>
                                 <td>{{$d->id}}</td>
                                 <td>{{$d->login}}</td>
-                                <td>{{$d->profile_name}}</td>
+                                <td>{{$d->profile->name}}</td>
                                 @if ($d->blocked == 0)
                                     <td>Ativo</td>
                                 @else

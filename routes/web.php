@@ -31,6 +31,7 @@ Route::get('perfis/{id}/remover', 'ProfilesController@destroy')->middleware('che
 Route::get('usuarios', 'UsersController@index')->name('usuarios')->middleware('checkuser');
 Route::get('usuarios/novo', 'UsersController@create')->middleware('checkuser');
 Route::post('usuarios/novo', 'UsersController@store')->middleware('checkuser');
+Route::get('usuarios/{id}/visualizar', 'UsersController@show')->middleware('checkuser');
 
 
 Route::get('login', 'LoginController@index')->middleware('checkguest');

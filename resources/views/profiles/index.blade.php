@@ -46,7 +46,7 @@
                             <tr>
                                 <td>{{$d->id}}</td>
                                 <td>{{$d->name}}</td>
-                                <td>{{ date('d/m/Y H:i:s', strtotime($d->created_at)) }}</td>
+                                <td>{{ date('d/m/Y H:i:s', strtotime($d->updated_at)) }}</td>
                                 <td>
                                     <a href="{{ url('perfis/' . $d->id . '/visualizar') }}" class="btn btn-default btn-circle"><i class="fa fa-eye"></i></a>
                                     <a href="{{ url('perfis/' . $d->id . '/editar') }}" class="btn btn-primary btn-circle"><i class="fa fa-pencil"></i></a>
