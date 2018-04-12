@@ -35,7 +35,7 @@ class UsersController extends Controller
 			'blocked' => 'required',
 			'profile' => 'required',
 		],[
-			'login.required' => 'Campo loginl é obrigatório.',
+			'login.required' => 'Campo login é obrigatório.',
 			'login.unique' => 'Este login já está sendo utilizado.',
 			'password.required' => 'Campo senha é obrigatório.',
 			'password.min' => 'Senha deve ter no mínimo 6 caracteres.',
@@ -58,8 +58,47 @@ class UsersController extends Controller
 	}
 
 	public function show($id)
-	{	
-		$user = User::find($id)->first();		
+	{		
+		$user = User::find($id);
 		return view('users.show', ['user' => $user, 'profiles' => $this->profiles]);
+	}
+
+	public function edit($id)
+	{	
+		$user = User::find($id);
+		return view('users.edit', ['user' => $user, 'profiles' => $this->profiles]);
+	}
+
+	public function update($id)
+	{		
+		$validator = Validator::make(request()->all(), [
+			'login' => 'required|unique:users,login,'.$id,			
+			'blocked' => 'required',
+			'profile' => 'required',
+		],[
+			'login.required' => 'Campo login é obrigatório.',
+			'login.unique' => 'Este login já está sendo utilizado.',			
+			'blocked.required' => 'Campo status é obrigatório.',
+			'profile.required' => 'Campo perfil é obrigatório.',
+		])->validate();
+
+		$user = User::where(['id' => $id])->update([
+			'login' => request()->login,			
+			'blocked' => request()->blocked,		
+			'profile_id' => request()->profile
+		]);
+
+		if($user){
+			session()->flash('success', 'Usuário atualizado com sucesso.');
+			return redirect('usuarios');
+		}
+
+	}
+
+	public function destroy($id) 
+	{
+		User::where(['id'=> $id])->update(['soft_delete' => 1]);		
+		session()->flash('success', 'Usuário removido com sucesso.');
+		return redirect('usuarios');
 	}
 }

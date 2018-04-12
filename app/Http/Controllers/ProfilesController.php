@@ -37,8 +37,7 @@ class ProfilesController extends Controller
 			'name.required' => 'Campo nome é obrigatório',
 			'name.min' => 'Insira no mínimo 2 caracteres no campo nome',
 		])->validate();
-		
-		// $profileId = DB::table('profiles')->insertGetId(['name'=> $request->name, 'created_at' => date('Y-m-d H:i:s')]);
+				
 		$profile = Profile::create([
 			'name' => $request->name			
 		]);
@@ -61,7 +60,7 @@ class ProfilesController extends Controller
 
 	public function show($id)
 	{	
-		$profile = Profile::find($id)->first();		
+		$profile = Profile::find($id);
 		
 		$privileges = $this->privilegeService->getPrivileges();
 
@@ -75,7 +74,7 @@ class ProfilesController extends Controller
 
 	public function edit($id) 
 	{
-		$profile = Profile::find($id)->first();		
+		$profile = Profile::find($id);		
 		
 		$privileges = $this->privilegeService->getPrivileges();
 
@@ -87,22 +86,22 @@ class ProfilesController extends Controller
 		return view('profiles.edit', ['profile' => $profile, 'privileges' => $privileges, 'profilesPrivileges' => $profilesPrivileges]);
 	}
 
-	public function update(Request $request) 
+	public function update($id) 
 	{
-		$validator = Validator::make($request->all(), [
+		$validator = Validator::make(request()->all(), [
 			'name' => 'required|min:2',					
 		],[
 			'name.required' => 'Campo nome é obrigatório',
 			'name.min' => 'Insira no mínimo 2 caracteres no campo nome',
 		])->validate();
 		
-		Profile::where(['id'=> $request->id])->update(['name' => $request->name]);
-		ProfilePrivilege::where(['profile_id' => $request->id])->delete();		
+		Profile::where(['id'=> request()->id])->update(['name' => request()->name]);
+		ProfilePrivilege::where(['profile_id' => request()->id])->delete();		
 		
-		if (! empty($request->privileges)) {
-			foreach ($request->privileges as $p) {
+		if (! empty(request()->privileges)) {
+			foreach (request()->privileges as $p) {
 				ProfilePrivilege::create([
-					'profile_id' => $request->id,  
+					'profile_id' => request()->id,
 					'privilege_id' => $p
 				]);				
 			}
@@ -114,7 +113,7 @@ class ProfilesController extends Controller
 
 	public function destroy($id) 
 	{
-		Profile::where(['id'=> $id])->update(['soft_delete' => 1, 'updated_at' => date('Y-m-d H:i:s')]);		
+		Profile::where(['id'=> $id])->update(['soft_delete' => 1]);
 		session()->flash('success', 'Perfil removido com sucesso.');
 		return redirect('perfis');
 	}

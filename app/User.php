@@ -29,6 +29,6 @@ class User extends Model
     {
         // The belongsTo relationship allows you to define a default model that will be returned if the given relationship is null. This pattern is often referred to as the Null Object pattern and can help remove conditional checks in your code.
         // https://laravel.com/docs/5.6/eloquent-relationships#one-to-one
-        return $this->belongsTo('App\Profile', 'id')->withDefault();        
+        return $this->belongsTo('App\Profile', 'profile_id', 'id')->withDefault();        
     }
 }

@@ -62,7 +62,7 @@
 
         <div class="text-center">
           <button type="submit" class="btn btn-success">Salvar</button>
-          <input type="reset" class="btn btn-secondary" value="Limpar Formulário" />
+          <a href="{{url('perfis')}}" type="button" class="btn btn-default">Cancelar</a>
         </div>
 
         <input type="hidden" name="id" value="{{$profile->id}}" />
