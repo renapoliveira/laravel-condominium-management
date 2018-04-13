@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB;
 use Validator;
+use Input;
 use App\User as User;
 use App\Profile as Profile;
 
@@ -19,7 +20,8 @@ class UsersController extends Controller
 	{
 
 		$data = User::where(['soft_delete' => 0])->orderBy('users.created_at', 'DESC')->paginate(15);
-		return view('users.index', ['data' => $data, 'profiles' => $this->profiles]);
+		// appends(request()->input()) will preserve the GET parameters when creating the pagination links
+		return view('users.index', ['data' => $data->appends(request()->input()), 'profiles' => $this->profiles]);
 	}
 
 	public function create() 
