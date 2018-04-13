@@ -21,6 +21,7 @@ class UsersController extends Controller
 
 		$data = User::where(['soft_delete' => 0])->orderBy('users.created_at', 'DESC')->paginate(15);
 		// appends(request()->input()) will preserve the GET parameters when creating the pagination links
+		// https://stackoverflow.com/questions/17159273/laravel-pagination-links-not-including-other-get-parameters#answer-38556505
 		return view('users.index', ['data' => $data->appends(request()->input()), 'profiles' => $this->profiles]);
 	}
 
