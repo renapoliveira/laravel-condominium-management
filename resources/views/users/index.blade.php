@@ -76,6 +76,7 @@
     </div>
     <!-- /.col-lg-12 -->    
 </div>
+<div id="paginator" class="col-md-12 col-lg-12 col-xl-12" style="text-align: center;">{{ $data->links() }}</div>
 <!-- /.row -->
 </div>
 

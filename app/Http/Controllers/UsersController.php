@@ -18,7 +18,7 @@ class UsersController extends Controller
 	public function index() 
 	{
 
-		$data = User::where(['soft_delete' => 0])->orderBy('users.created_at', 'DESC')->get();
+		$data = User::where(['soft_delete' => 0])->orderBy('users.created_at', 'DESC')->paginate(15);
 		return view('users.index', ['data' => $data]);
 	}
 

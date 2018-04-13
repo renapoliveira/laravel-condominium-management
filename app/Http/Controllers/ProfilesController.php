@@ -19,7 +19,7 @@ class ProfilesController extends Controller
 
 	public function index() 
 	{		
-		$data = Profile::where(['soft_delete' => 0])->orderBy('created_at', 'DESC')->get();
+		$data = Profile::where(['soft_delete' => 0])->orderBy('created_at', 'DESC')->paginate(15);
 		return view('profiles.index', ['data' => $data]);
 	}
 
