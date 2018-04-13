@@ -44,17 +44,41 @@
                             </tr>
                         </thead>
                         <tbody>
+                            <form action="" method="GET">
+                                <tr>
+                                    <td></td>
+                                    <td><input class="form-control" type="text" name="login" value='<?php echo (isset($_GET["login"])) ? $_GET["login"] : ""; ?>' /></td>
+                                    <td>
+                                        <select class="form-control" name="profile">
+                                            <option value="" <?php echo (isset($_GET["profile"]) && $_GET["profile"] == "") ? "selected='selected'" : ""; ?>></option>
+                                            <option value="0" <?php echo (isset($_GET["profile"]) && $_GET["profile"] == "0") ? "selected='selected'" : ""; ?>>Nenhum</option>
+                                            @foreach($profiles as $p)
+                                            <option value="{{$p->id}}" <?php echo (isset($_GET["profile"]) && $_GET["profile"] == $p->id) ? "selected='selected'" : ""; ?>>{{$p->name}}</option>
+                                            @endforeach            
+                                        </select>
+                                    </td>                                
+                                    <td>
+                                        <select class="form-control" name="blocked">
+                                            <option value="" <?php echo (isset($_GET["blocked"]) && $_GET["blocked"] == "") ? "selected='selected'" : ""; ?>></option>
+                                            <option value="0" <?php echo (isset($_GET["blocked"]) && $_GET["blocked"] == "0") ? "selected='selected'" : ""; ?>>Ativo</option>
+                                            <option value="1" <?php echo (isset($_GET["blocked"]) && $_GET["blocked"] == "1") ? "selected='selected'" : ""; ?>>Bloqueado</option>
+                                        </select>
+                                    </td>
+                                    <td></td>                                
+                                    <td><button type="submit" class="btn btn-primary">Filtrar</button> <a onClick="reset()" class="btn btn-default">Limpar</a></td>
+                                </tr>
+                            </form>
                             @foreach ($data as $d)
                             <tr>
                                 <td>{{$d->id}}</td>
                                 <td>{{$d->login}}</td>
                                 <td>{{$d->profile->name}}</td>
                                 @if ($d->blocked == 0)
-                                    <td>Ativo</td>
+                                <td>Ativo</td>
                                 @else
-                                    <td>Bloqueado</td>
+                                <td>Bloqueado</td>
                                 @endif
-                                <td>{{ date('d/m/Y H:i:s', strtotime($d->created_at)) }}</td>
+                                <td>{{ date('d/m/Y H:i:s', strtotime($d->updated_at)) }}</td>
                                 <td>
                                     <a href="{{ url('usuarios/' . $d->id . '/visualizar') }}" class="btn btn-default btn-circle"><i class="fa fa-eye"></i></a>
                                     <a href="{{ url('usuarios/' . $d->id . '/editar') }}" class="btn btn-primary btn-circle"><i class="fa fa-pencil"></i></a>
@@ -106,6 +130,12 @@
 <script>
     function createModalLink(source) {        
         document.getElementById("remove_confirm").href = source.value;
+    }
+    function reset(){        
+        var elements = document.getElementsByClassName("form-control");
+        for(var i = 0; i < elements.length; i++) {            
+            elements[i].value = "";
+        }
     }
 </script>
 @endsection

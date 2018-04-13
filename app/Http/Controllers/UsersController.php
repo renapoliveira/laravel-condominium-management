@@ -19,7 +19,7 @@ class UsersController extends Controller
 	{
 
 		$data = User::where(['soft_delete' => 0])->orderBy('users.created_at', 'DESC')->paginate(15);
-		return view('users.index', ['data' => $data]);
+		return view('users.index', ['data' => $data, 'profiles' => $this->profiles]);
 	}
 
 	public function create() 
