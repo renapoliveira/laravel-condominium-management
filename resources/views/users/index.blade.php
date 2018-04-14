@@ -47,21 +47,21 @@
                             <form action="" method="GET">
                                 <tr>
                                     <td></td>
-                                    <td><input class="form-control" type="text" name="login" value='<?php echo (isset($_GET["login"])) ? $_GET["login"] : ""; ?>' /></td>
+                                    <td><input class="form-control" type="text" name="login" value="{{ $search['login'] or '' }}" /></td>
                                     <td>
                                         <select class="form-control" name="profile">
-                                            <option value="" <?php echo (isset($_GET["profile"]) && $_GET["profile"] == "") ? "selected='selected'" : ""; ?>></option>
-                                            <option value="0" <?php echo (isset($_GET["profile"]) && $_GET["profile"] == "0") ? "selected='selected'" : ""; ?>>Nenhum</option>
+                                            <option value=""></option>
+                                            <option value="0" {{ (isset($search['profile']) && $search['profile'] == "0") ? 'selected="selected"' : ''}}>Nenhum</option>
                                             @foreach($profiles as $p)
-                                            <option value="{{$p->id}}" <?php echo (isset($_GET["profile"]) && $_GET["profile"] == $p->id) ? "selected='selected'" : ""; ?>>{{$p->name}}</option>
+                                                <option value="{{$p->id}}" {{ ($search['profile'] && $search['profile'] == $p->id) ? 'selected="selected"' : ''}}>{{$p->name}}</option>
                                             @endforeach            
                                         </select>
                                     </td>                                
                                     <td>
                                         <select class="form-control" name="blocked">
-                                            <option value="" <?php echo (isset($_GET["blocked"]) && $_GET["blocked"] == "") ? "selected='selected'" : ""; ?>></option>
-                                            <option value="0" <?php echo (isset($_GET["blocked"]) && $_GET["blocked"] == "0") ? "selected='selected'" : ""; ?>>Ativo</option>
-                                            <option value="1" <?php echo (isset($_GET["blocked"]) && $_GET["blocked"] == "1") ? "selected='selected'" : ""; ?>>Bloqueado</option>
+                                            <option value=""></option>
+                                            <option value="0" {{ (isset($search['blocked']) && $search['blocked'] == "0") ? 'selected="selected"' : ''}}>Ativo</option>
+                                            <option value="1" {{ (isset($search['blocked']) && $search['blocked'] == "1") ? 'selected="selected"' : ''}}>Bloqueado</option>
                                         </select>
                                     </td>
                                     <td></td>                                
