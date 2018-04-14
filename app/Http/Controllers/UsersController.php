@@ -111,6 +111,33 @@ class UsersController extends Controller
 		return redirect('usuarios');
 	}
 
+	public function editPassword($id)
+	{	
+		$user = User::find($id);
+		return view('users.editPassword', ['user' => $user, 'profiles' => $this->profiles]);
+	}
+
+	public function updatePassword($id)
+	{		
+		$validator = Validator::make(request()->all(), [			
+			'password' => 'required|min:6|confirmed',
+		],[			
+			'password.required' => 'Campo senha é obrigatório.',
+			'password.min' => 'Senha deve ter no mínimo 6 caracteres.',
+			'password.confirmed' => 'Senhas não conferem.',
+		])->validate();
+
+		$user = User::where(['id' => $id])->update([
+			'password' => bcrypt(request()->password),
+		]);
+
+		if($user){
+			session()->flash('success', 'Senha do usuário atualizado com sucesso.');
+			return redirect('usuarios');
+		}
+
+	}
+
 	private function filter()
 	{
 		$data = User::where(['soft_delete' => 0]);
@@ -173,7 +200,7 @@ class UsersController extends Controller
 			if (isset($this->input['sort'])) {
 				if ($this->input['sort'] == $t['value']) {
 					if (isset($this->input['order'])) {
-						$link = '<a href="' . $sortLink . '&sort='. $t['value']. '&order=desc' . '">' . $t['label'] .'</a> <i class="fa fa-chevron-' . (($this->input['order'] == 'asc') ? 'up' : 'down') . '"></i>';						
+						$link = '<a href="' . $sortLink . '&sort='. $t['value']. '&order='. (($this->input['order'] == 'asc') ? 'desc ' : 'asc') . '">' . $t['label'] .'</a> <i class="fa fa-chevron-' . (($this->input['order'] == 'asc') ? 'up' : 'down') . '"></i>';						
 					} else {
 						$link = '<a href="' . $sortLink . '&sort='. $t['value']. '&order=asc' . '">' . $t['label'] .'</a> <i class="fa fa-chevron-up"></i>';
 					}

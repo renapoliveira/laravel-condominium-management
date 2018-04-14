@@ -35,6 +35,8 @@ Route::get('usuarios/{id}/visualizar', 'UsersController@show')->middleware('chec
 Route::get('usuarios/{id}/editar', 'UsersController@edit')->middleware('checkuser');
 Route::post('usuarios/{id}/editar', 'UsersController@update')->middleware('checkuser');
 Route::get('usuarios/{id}/remover', 'UsersController@destroy')->middleware('checkuser');
+Route::get('usuarios/{id}/nova_senha', 'UsersController@editPassword')->middleware('checkuser');
+Route::post('usuarios/{id}/nova_senha', 'UsersController@updatePassword')->middleware('checkuser');
 
 
 Route::get('login', 'LoginController@index')->middleware('checkguest');

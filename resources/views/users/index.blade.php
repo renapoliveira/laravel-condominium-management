@@ -79,9 +79,10 @@
                                 @endif
                                 <td>{{ date('d/m/Y H:i:s', strtotime($d->updated_at)) }}</td>
                                 <td>
-                                    <a href="{{ url('usuarios/' . $d->id . '/visualizar') }}" class="btn btn-default btn-circle"><i class="fa fa-eye"></i></a>
-                                    <a href="{{ url('usuarios/' . $d->id . '/editar') }}" class="btn btn-primary btn-circle"><i class="fa fa-pencil"></i></a>
-                                    <button class="btn btn-danger btn-circle" data-toggle="modal" data-target="#myModal" value="{{ url('usuarios/' . $d->id . '/remover') }}" onClick="createModalLink(this)"><i class="fa fa-trash"></i></button>
+                                    <a href="{{ url('usuarios/' . $d->id . '/visualizar') }}" class="btn btn-default btn-circle" title="Visualizar usuário"><i class="fa fa-eye"></i></a>
+                                    <a href="{{ url('usuarios/' . $d->id . '/editar') }}" class="btn btn-primary btn-circle" title="Editar usuário"><i class="fa fa-pencil"></i></a>
+                                    <button class="btn btn-danger btn-circle" data-toggle="modal" data-target="#myModal" value="{{ url('usuarios/' . $d->id . '/remover') }}" onClick="createModalLink(this)" title="Remover usuário"><i class="fa fa-trash"></i></button>
+                                    <a href="{{ url('usuarios/' . $d->id . '/nova_senha') }}" class="btn btn-warning btn-circle" title="Alterar senha"><i class="fa fa-key"></i></a>
                                 </td>
                             </tr>
                             @endforeach
@@ -97,6 +98,7 @@
         </div>
         <!-- /.panel -->
     </div>
+    <div class="col-md-12 col-lg-12 col-xl-12">Total: {{ $data->total() }}</div>
     <!-- /.col-lg-12 -->    
 </div>
 <div id="paginator" class="col-md-12 col-lg-12 col-xl-12" style="text-align: center;">{{ $data->links() }}</div>
