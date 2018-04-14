@@ -46,9 +46,9 @@
 
         <div class="form-group">
           <label>Status</label>
-          <select class="form-control" name="blocked">
-            <option value="0">Ativo</option>
-            <option value="1">Bloqueado</option>
+          <select class="form-control" name="status">
+            <option value="1" selected="selected">Ativo</option>
+            <option value="0">Bloqueado</option>
           </select>
         </div>
 

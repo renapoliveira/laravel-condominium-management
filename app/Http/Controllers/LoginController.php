@@ -46,7 +46,7 @@ class LoginController extends Controller
 		$validator = Validator::make($request->all(), [
 			'login' => [
 				Rule::exists('users')->where(function ($query) {
-					$query->where('blocked', '0');
+					$query->where('status', '1');
 				}),
 			],
 		],[

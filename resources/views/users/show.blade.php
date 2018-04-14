@@ -30,9 +30,9 @@
 
         <div class="form-group">
           <label>Status</label>
-          <select class="form-control" name="blocked" disabled="disabled">
-            <option value="0" <?php echo ($user->blocked == 0) ? 'selected="selected"' : ''; ?>>Ativo</option>
-            <option value="1" <?php echo ($user->blocked == 1) ? 'selected="selected"' : ''; ?>>Bloqueado</option>
+          <select class="form-control" name="status" disabled="disabled">
+            <option value="1" <?php echo ($user->status == 1) ? 'selected="selected"' : ''; ?>>Ativo</option>
+            <option value="0" <?php echo ($user->status == 0) ? 'selected="selected"' : ''; ?>>Bloqueado</option>
           </select>
         </div>
 

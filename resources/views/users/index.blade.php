@@ -36,10 +36,9 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Login</th>
-                                <th>Perfil</th>
-                                <th>Status</th>
-                                <th>Última atualização</th>
+                                @foreach($tableTitles as $t)                                    
+                                    <th>{!! $t !!}</th>
+                                @endforeach                                
                                 <th>Ações</th>
                             </tr>
                         </thead>
@@ -49,19 +48,19 @@
                                     <td></td>
                                     <td><input class="form-control" type="text" name="login" value="{{ $search['login'] or '' }}" /></td>
                                     <td>
-                                        <select class="form-control" name="profile">
+                                        <select class="form-control" name="profile_id">
                                             <option value=""></option>
-                                            <option value="0" {{ (isset($search['profile']) && $search['profile'] == "0") ? 'selected="selected"' : ''}}>Nenhum</option>
+                                            <option value="0" {{ (isset($search['profile_id']) && $search['profile_id'] == "0") ? 'selected="selected"' : ''}}>Nenhum</option>
                                             @foreach($profiles as $p)
-                                                <option value="{{$p->id}}" {{ ($search['profile'] && $search['profile'] == $p->id) ? 'selected="selected"' : ''}}>{{$p->name}}</option>
+                                                <option value="{{$p->id}}" {{ (isset($search['profile_id']) && $search['profile_id'] == $p->id) ? 'selected="selected"' : ''}}>{{$p->name}}</option>
                                             @endforeach            
                                         </select>
                                     </td>                                
                                     <td>
-                                        <select class="form-control" name="blocked">
+                                        <select class="form-control" name="status">
                                             <option value=""></option>
-                                            <option value="0" {{ (isset($search['blocked']) && $search['blocked'] == "0") ? 'selected="selected"' : ''}}>Ativo</option>
-                                            <option value="1" {{ (isset($search['blocked']) && $search['blocked'] == "1") ? 'selected="selected"' : ''}}>Bloqueado</option>
+                                            <option value="1" {{ (isset($search['status']) && $search['status'] == "1") ? 'selected="selected"' : ''}}>Ativo</option>
+                                            <option value="0" {{ (isset($search['status']) && $search['status'] == "0") ? 'selected="selected"' : ''}}>Bloqueado</option>
                                         </select>
                                     </td>
                                     <td></td>                                
@@ -73,7 +72,7 @@
                                 <td>{{$d->id}}</td>
                                 <td>{{$d->login}}</td>
                                 <td>{{$d->profile->name}}</td>
-                                @if ($d->blocked == 0)
+                                @if ($d->status == 1)
                                 <td>Ativo</td>
                                 @else
                                 <td>Bloqueado</td>
@@ -136,6 +135,6 @@
         for(var i = 0; i < elements.length; i++) {            
             elements[i].value = "";
         }
-    }
+    }    
 </script>
 @endsection
