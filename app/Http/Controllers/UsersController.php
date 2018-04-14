@@ -168,7 +168,7 @@ class UsersController extends Controller
 		} else {
 			$data = $data->orderBy('created_at', 'DESC');
 		}
-		$data = $data->paginate(3);
+		$data = $data->paginate(15);
 		return $data;
 	}
 
