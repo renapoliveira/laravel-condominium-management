@@ -8,24 +8,29 @@ use Validator;
 use Input;
 use App\User as User;
 use App\Profile as Profile;
+use App\Services\MainService;
 
 class UsersController extends Controller
 {
 	public function __construct()
 	{		
 		$this->profiles = Profile::where(['soft_delete' => 0])->orderBy('name', 'ASC')->get();
-		$this->tableTitles = [['value' => 'login', 'label' => 'Login'], ['value' => 'profile_id', 'label' => 'Perfil'], ['value' => 'status', 'label' => 'Status'], ['value' => 'updated_at', 'label' => 'Última atualização']];
+		$this->tableTitles = [
+			['value' => 'login', 'label' => 'Login'], 
+			['value' => 'profile_id', 'label' => 'Perfil'], 
+			['value' => 'status', 'label' => 'Status'], 
+			['value' => 'updated_at', 'label' => 'Última atualização']
+		];
 		$this->input = request()->input();
+		$this->mainService = new mainService($this->createSortLink(), $this->tableTitles, $this->input);
 	}
 
 	public function index() 
-	{
-		$this->createTableTitles();
+	{		
 		$data = $this->filter();
-		$data = $this->sort($data);
-		$tableTitles = $this->createTableTitles();
+		$data = $this->mainService->sort($data);
+		$tableTitles = $this->mainService->createTableHeader();
 		// appends(request()->input()) will preserve the GET parameters when creating the pagination links
-		// https://stackoverflow.com/questions/17159273/laravel-pagination-links-not-including-other-get-parameters#answer-38556505
 		return view('users.index', ['data' => $data->appends($this->input), 'search' => $this->input, 'profiles' => $this->profiles, 'tableTitles' => $tableTitles ]);
 	}	
 
@@ -157,21 +162,6 @@ class UsersController extends Controller
 		return $data;
 	}
 
-	private function sort($data)
-	{
-		if (isset($this->input['sort'])) {
-			if (isset($this->input['order']) && ($this->input['order'] == 'asc' || $this->input['order'] == 'desc') ) {
-				$data = $data->orderBy($this->input['sort'], $this->input['order']);
-			} else {
-				$data = $data->orderBy($this->input['sort'], 'asc');
-			}
-		} else {
-			$data = $data->orderBy('created_at', 'DESC');
-		}
-		$data = $data->paginate(15);
-		return $data;
-	}
-
 	private function createSortLink()
 	{
 		$sortLink = "?";
@@ -190,29 +180,5 @@ class UsersController extends Controller
 
 		return $sortLink;
 	}
-
-	private function createTableTitles()
-	{
-		$tableTitles = [];
-		$sortLink = $this->createSortLink();		
-
-		foreach($this->tableTitles as $t){
-			if (isset($this->input['sort'])) {
-				if ($this->input['sort'] == $t['value']) {
-					if (isset($this->input['order'])) {
-						$link = '<a href="' . $sortLink . '&sort='. $t['value']. '&order='. (($this->input['order'] == 'asc') ? 'desc ' : 'asc') . '">' . $t['label'] .'</a> <i class="fa fa-chevron-' . (($this->input['order'] == 'asc') ? 'up' : 'down') . '"></i>';						
-					} else {
-						$link = '<a href="' . $sortLink . '&sort='. $t['value']. '&order=asc' . '">' . $t['label'] .'</a> <i class="fa fa-chevron-up"></i>';
-					}
-				} else {
-					$link = '<a href="' . $sortLink . '&sort='. $t['value']. '&order=asc' . '">' . $t['label'] .'</a>';					
-				}
-			} else {
-				$link = '<a href="' . $sortLink . '&sort='. $t['value']. '&order=asc' . '">' . $t['label'] .'</a>';				
-			}
-			$tableTitles[] = $link;			
-		}
-
-		return $tableTitles;
-	}
+	
 }

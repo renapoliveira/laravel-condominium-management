@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Services\PrivilegeService;
 use DB;
 use Validator;
+use App\Services\PrivilegeService;
 use App\Profile as Profile;
 use App\ProfilePrivilege as ProfilePrivilege;
+use App\Services\MainService;
 
 
 class ProfilesController extends Controller
@@ -15,12 +16,20 @@ class ProfilesController extends Controller
 	function __construct() 
 	{
 		$this->privilegeService = new PrivilegeService;
+		$this->tableTitles = [
+			['value' => 'name', 'label' => 'Nome'], 
+			['value' => 'updated_at', 'label' => 'Última atualização']
+		];
+		$this->input = request()->input();
+		$this->mainService = new mainService($this->createSortLink(), $this->tableTitles, $this->input);
 	}
 
 	public function index() 
-	{		
-		$data = Profile::where(['soft_delete' => 0])->orderBy('created_at', 'DESC')->paginate(15);
-		return view('profiles.index', ['data' => $data]);
+	{	
+		$data = $this->filter();
+		$data = $this->mainService->sort($data);
+		$tableTitles = $this->mainService->createTableHeader();
+		return view('profiles.index', ['data' => $data->appends($this->input), 'search' => $this->input, 'tableTitles' => $tableTitles ]);
 	}
 
 	public function create() 
@@ -117,5 +126,27 @@ class ProfilesController extends Controller
 		session()->flash('success', 'Perfil removido com sucesso.');
 		return redirect('perfis');
 	}
+
+	private function filter()
+	{
+		$data = Profile::where(['soft_delete' => 0]);
+
+		if (isset($this->input['name'])) {
+			$data = $data->where('name', 'like', $this->input['name']."%");
+		}		
+
+		return $data;
+	}	
+
+	private function createSortLink()
+	{
+		$sortLink = "?";
+
+		if (isset($this->input['name'])) {
+			$sortLink .= 'name=' . $this->input['name'] . '&';
+		}		
+
+		return $sortLink;
+	}	
 
 }

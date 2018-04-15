@@ -36,12 +36,21 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Nome</th>
-                                <th>Última atualização</th>
+                                @foreach($tableTitles as $t)
+                                    <th>{!! $t !!}</th>
+                                @endforeach
                                 <th>Ações</th>
                             </tr>
                         </thead>
                         <tbody>
+                            <form action="" method="GET">
+                                <tr>
+                                    <td></td>
+                                    <td><input class="form-control" type="text" name="name" value="{{ $search['name'] or '' }}" /></td>                                    
+                                    <td></td>                                
+                                    <td><button type="submit" class="btn btn-primary">Filtrar</button> <a onClick="reset()" class="btn btn-default">Limpar</a></td>
+                                </tr>
+                            </form>
                             @foreach ($data as $d)
                             <tr>
                                 <td>{{$d->id}}</td>
@@ -66,6 +75,7 @@
         </div>
         <!-- /.panel -->
     </div>
+    <div class="col-md-12 col-lg-12 col-xl-12">Total: {{ $data->total() }}</div>
     <!-- /.col-lg-12 -->    
 </div>
 <div id="paginator" class="col-md-12 col-lg-12 col-xl-12" style="text-align: center;">{{ $data->links() }}</div>
@@ -99,5 +109,11 @@
     function createModalLink(source) {        
         document.getElementById("remove_confirm").href = source.value;
     }
+    function reset(){        
+        var elements = document.getElementsByClassName("form-control");
+        for(var i = 0; i < elements.length; i++) {            
+            elements[i].value = "";
+        }
+    }    
 </script>
 @endsection
