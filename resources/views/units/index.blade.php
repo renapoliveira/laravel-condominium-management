@@ -36,17 +36,17 @@
 
         <fieldset class="form-group">
             <label>Número de blocos</label>
-            <input name="units" class="form-control" placeholder="Número de blocos" value="{{ old('units', $data->units) }}" required>
+            <input name="units" class="form-control" placeholder="Número de blocos" value="{{ old('units', @$data->units) }}" required>
         </fieldset>
 
         <fieldset class="form-group">
             <label>Número de andares por bloco</label>
-            <input name="floors" class="form-control" placeholder="Número de andares" value="{{ old('floors', $data->floors) }}" required>
+            <input name="floors" class="form-control" placeholder="Número de andares" value="{{ old('floors', @$data->floors) }}" required>
         </fieldset>
 
         <fieldset class="form-group">
             <label>Número de apartamentos por andar</label>
-            <input name="apartments" class="form-control" placeholder="Número de apartamentos" value="{{ old('apartments', $data->apartments) }}" required>
+            <input name="apartments" class="form-control" placeholder="Número de apartamentos" value="{{ old('apartments', @$data->apartments) }}" required>
         </fieldset>
 
         <div class="text-center">
