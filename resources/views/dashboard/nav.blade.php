@@ -170,8 +170,9 @@
                     </ul>
                     <!-- /.nav-second-level -->
                 </li>
-                                
-                
+                <li>
+                    <a href="{{ url('blocos') }}"><i class="fa fa-building fa-fw"></i> Cadastro de blocos</a>
+                </li>
             </ul>
         </div>
         <!-- /.sidebar-collapse -->

@@ -38,6 +38,9 @@ Route::get('usuarios/{id}/remover', 'UsersController@destroy')->middleware('chec
 Route::get('usuarios/{id}/nova_senha', 'UsersController@editPassword')->middleware('checkuser');
 Route::post('usuarios/{id}/nova_senha', 'UsersController@updatePassword')->middleware('checkuser');
 
+Route::get('blocos', 'UnitsController@index')->name('blocos')->middleware('checkuser');
+Route::post('blocos', 'UnitsController@store')->middleware('checkuser');
+
 
 Route::get('login', 'LoginController@index')->middleware('checkguest');
 Route::post('login', 'LoginController@login')->middleware('checkguest');
