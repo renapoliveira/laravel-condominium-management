@@ -36,7 +36,7 @@
         {{ csrf_field() }}
         <fieldset class="form-group">
           <label>Nome</label>
-          <input name="name" class="form-control" placeholder="Nome do perfil" value="{{ $profile->name }}" required>
+          <input name="name" class="form-control" placeholder="Nome do perfil" value="{{ old('name', $profile->name) }}" required>
         </fieldset>
 
         <fieldset class="form-group">

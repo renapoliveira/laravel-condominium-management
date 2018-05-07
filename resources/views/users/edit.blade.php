@@ -37,7 +37,7 @@
 
         <fieldset class="form-group">
           <label>Login</label>
-          <input name="login" class="form-control" placeholder="Login" value="{{$user->login}}">
+          <input name="login" class="form-control" placeholder="Login" value="{{ old('login', $user->login) }}">
         </fieldset>
 
         <div class="form-group">
