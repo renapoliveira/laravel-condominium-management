@@ -39,9 +39,9 @@ class UsersController extends Controller
 		return view('users.create', ['profiles' => $this->profiles]);
 	}
 
-	public function store(Request $request)
+	public function store()
 	{		
-		$validator = Validator::make($request->all(), [
+		$validator = Validator::make(request()->all(), [
 			'login' => 'required|alpha_dash|unique:users',
 			'password' => 'required|min:6',
 			'status' => 'required',
@@ -57,10 +57,10 @@ class UsersController extends Controller
 		])->validate();
 
 		$user = User::create([
-			'login' => $request->login,
-			'password' => bcrypt($request->password),
-			'status' => $request->status,
-			'profile' => $request->profile
+			'login' => request()->login,
+			'password' => bcrypt(request()->password),
+			'status' => request()->status,
+			'profile' => request()->profile
 		]);
 
 		if($user->id){
