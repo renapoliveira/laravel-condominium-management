@@ -53,10 +53,48 @@
           <select class="form-control" name="profile">
             <option value="0">Nenhum</option>
             @foreach($profiles as $p)
-              <option value="{{$p->id}}" <?php echo ($user->profile->id == $p->id) ? 'selected="selected"' : ''; ?>>{{$p->name}}</option>
+            <option value="{{$p->id}}" <?php echo ($user->profile->id == $p->id) ? 'selected="selected"' : ''; ?>>{{$p->name}}</option>
             @endforeach            
           </select>
         </div>
+
+        @if(isset($unit) && !empty($unit))
+        
+            <fieldset class="form-group">
+            <h3>Morador</h3>
+          </fieldset>
+
+          <div class="form-group">
+            <label>Bloco</label>
+            <select class="form-control" name="profile">
+              <option value="0">Nenhum</option>
+              @for($x = 1 ; $x <= $unit->units; $x++)
+              <option value="<?php echo $x; ?>"><?php echo $x; ?></option>
+              @endfor
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Andar</label>
+            <select class="form-control" name="profile">
+              <option value="0">Nenhum</option>
+              @for($x = 0 ; $x <= $unit->floors; $x++)
+              <option value="<?php echo $x; ?>"><?php echo ($x == 0) ? "Térreo" : $x; ?></option>
+              @endfor
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Apartamento</label>
+            <select class="form-control" name="profile">
+              <option value="0">Nenhum</option>
+              @for($x = 1 ; $x <= $unit->apartments; $x++)
+              <option value="<?php echo $x; ?>"><?php echo $x; ?></option>
+              @endfor
+            </select>
+          </div>
+
+        @endif
 
         <div class="text-center">
           <button type="submit" class="btn btn-success">Salvar</button>

@@ -9,6 +9,7 @@ use Input;
 use App\User as User;
 use App\Profile as Profile;
 use App\Services\MainService;
+use App\Unit as Unit;
 
 class UsersController extends Controller
 {
@@ -77,9 +78,10 @@ class UsersController extends Controller
 	}
 
 	public function edit($id)
-	{	
+	{
 		$user = User::find($id);
-		return view('users.edit', ['user' => $user, 'profiles' => $this->profiles]);
+		$unit = Unit::find(1);
+		return view('users.edit', ['user' => $user, 'profiles' => $this->profiles, 'unit' => $unit]);
 	}
 
 	public function update($id)

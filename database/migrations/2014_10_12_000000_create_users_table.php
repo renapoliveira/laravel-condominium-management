@@ -19,6 +19,9 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->integer('profile_id')->default(0);
             $table->boolean('status')->default(1);
+            $table->integer('unit')->nullable()->default(null);
+            $table->integer('floor')->nullable()->default(null);
+            $table->integer('apartment')->nullable()->default(null);
             $table->boolean('soft_delete')->default(0);
             $table->rememberToken();
             $table->timestamps();
